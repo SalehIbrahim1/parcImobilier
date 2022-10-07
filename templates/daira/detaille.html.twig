@@ -1,0 +1,27 @@
+{% extends ea.templatePath('layout') %}
+{% block main %}
+
+<div class="card">
+    <div class="card-header">
+        Communes de la daira "{{ daira }}"
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+              </tr>
+            </thead>
+            <tbody>
+             {% for c in daira.communes %}
+             <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{c}}</td>
+              </tr>
+             {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CiteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CiteRepository::class)]
@@ -19,6 +21,14 @@ class Cite
     #[ORM\ManyToOne(inversedBy: 'cites')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Commune $commune = null;
+
+    #[ORM\OneToMany(mappedBy: 'cite', targetEntity: Batiment::class, orphanRemoval: true)]
+    private Collection $batiments;
+
+    public function __construct()
+    {
+        $this->batiments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -48,4 +58,40 @@ class Cite
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Batiment>
+     */
+    public function getBatiments(): Collection
+    {
+        return $this->batiments;
+    }
+
+    public function addBatiment(Batiment $batiment): self
+    {
+        if (!$this->batiments->contains($batiment)) {
+            $this->batiments->add($batiment);
+            $batiment->setCite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBatiment(Batiment $batiment): self
+    {
+        if ($this->batiments->removeElement($batiment)) {
+            // set the owning side to null (unless already changed)
+            if ($batiment->getCite() === $this) {
+                $batiment->setCite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    function __toString()
+    {
+        return $this->nom;
+    }
+
 }
