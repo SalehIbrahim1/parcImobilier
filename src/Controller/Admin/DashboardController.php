@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Daira;
 use App\Entity\Commune;
 use App\Controller\Admin\DairaCrudController;
+use App\Entity\Cite;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -50,6 +51,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Daira', 'fas fa-list', Daira::class);
         yield MenuItem::linkToCrud('Commune', 'fas fa-list', Commune::class);
+        yield MenuItem::linkToCrud('Cités', 'fas fa-list', Cite::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
