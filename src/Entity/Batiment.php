@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BatimentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BatimentRepository::class)]
@@ -25,6 +27,14 @@ class Batiment
     #[ORM\ManyToOne(inversedBy: 'batiments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Cite $cite = null;
+
+    #[ORM\OneToMany(mappedBy: 'batiment', targetEntity: Bien::class, orphanRemoval: true)]
+    private Collection $biens;
+
+    public function __construct()
+    {
+        $this->biens = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -77,5 +87,39 @@ class Batiment
         $this->cite = $cite;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Bien>
+     */
+    public function getBiens(): Collection
+    {
+        return $this->biens;
+    }
+
+    public function addBien(Bien $bien): self
+    {
+        if (!$this->biens->contains($bien)) {
+            $this->biens->add($bien);
+            $bien->setBatiment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBien(Bien $bien): self
+    {
+        if ($this->biens->removeElement($bien)) {
+            // set the owning side to null (unless already changed)
+            if ($bien->getBatiment() === $this) {
+                $bien->setBatiment(null);
+            }
+        }
+
+        return $this;
+    }
+    function __toString()
+    {
+        return $this->nom;
     }
 }
