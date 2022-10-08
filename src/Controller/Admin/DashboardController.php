@@ -11,6 +11,7 @@ use App\Entity\Cite;
 use App\Entity\Contrat;
 use App\Entity\Locataire;
 use App\Entity\Payement;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -62,6 +63,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Locataires', 'fa-solid fa-people-roof', Locataire::class);
         yield MenuItem::linkToCrud('Contrats', 'fa-solid fa-handshake', Contrat::class);
         yield MenuItem::linkToCrud('Payement', 'fa-solid fa-sack-dollar', Payement::class);
+        yield MenuItem::linkToCrud('Utilisateurs', 'fa-solid fa-user', User::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
