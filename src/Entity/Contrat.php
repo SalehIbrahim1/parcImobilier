@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ContratRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -41,6 +43,14 @@ class Contrat
     #[ORM\ManyToOne(inversedBy: 'contrats')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Locataire $locataire = null;
+
+    #[ORM\OneToMany(mappedBy: 'contrat', targetEntity: Payement::class, orphanRemoval: true)]
+    private Collection $payements;
+
+    public function __construct()
+    {
+        $this->payements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -151,6 +161,36 @@ class Contrat
     public function setLocataire(?Locataire $locataire): self
     {
         $this->locataire = $locataire;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Payement>
+     */
+    public function getPayements(): Collection
+    {
+        return $this->payements;
+    }
+
+    public function addPayement(Payement $payement): self
+    {
+        if (!$this->payements->contains($payement)) {
+            $this->payements->add($payement);
+            $payement->setContrat($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayement(Payement $payement): self
+    {
+        if ($this->payements->removeElement($payement)) {
+            // set the owning side to null (unless already changed)
+            if ($payement->getContrat() === $this) {
+                $payement->setContrat(null);
+            }
+        }
 
         return $this;
     }

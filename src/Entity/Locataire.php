@@ -208,4 +208,9 @@ class Locataire
 
         return $this;
     }
+
+    function __toString()
+    {
+        return $this->nom ." ". $this->prenom;
+    }
 }

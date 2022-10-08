@@ -8,7 +8,9 @@ use App\Controller\Admin\DairaCrudController;
 use App\Entity\Batiment;
 use App\Entity\Bien;
 use App\Entity\Cite;
+use App\Entity\Contrat;
 use App\Entity\Locataire;
+use App\Entity\Payement;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -54,10 +56,12 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Daira', 'fas fa-list', Daira::class);
         yield MenuItem::linkToCrud('Commune', 'fas fa-list', Commune::class);
-        yield MenuItem::linkToCrud('Cités', 'fas fa-list', Cite::class);
+        yield MenuItem::linkToCrud('Cités', 'fa-solid fa-city', Cite::class);
         yield MenuItem::linkToCrud('Batiments', 'fas fa-list', Batiment::class);
-        yield MenuItem::linkToCrud('Biens', 'fas fa-list', Bien::class);
-        yield MenuItem::linkToCrud('Locataires', 'fas fa-list', Locataire::class);
+        yield MenuItem::linkToCrud('Biens', 'fa-solid fa-parachute-box', Bien::class);
+        yield MenuItem::linkToCrud('Locataires', 'fa-solid fa-people-roof', Locataire::class);
+        yield MenuItem::linkToCrud('Contrats', 'fa-solid fa-handshake', Contrat::class);
+        yield MenuItem::linkToCrud('Payement', 'fa-solid fa-sack-dollar', Payement::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
