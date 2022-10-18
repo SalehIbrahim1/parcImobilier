@@ -194,4 +194,24 @@ class Contrat
 
         return $this;
     }
+
+    public function getTotal()
+    {
+        return $this->loyer_principale + $this->cautionnement + $this->charge + $this->frais_enregistrement + $this->frais_timbre + $this->tva;
+    }
+
+    public function getPayer()
+    {
+        # code...
+        $total = 0;
+        foreach ($this->payements as $p) {
+            $total +=$p->getMontant();
+        }
+        return $total;
+    }
+
+    public function getReste()
+    {
+        return $this->getTotal() - $this->getPayer();
+    }
 }
