@@ -3,7 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Payement;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class PayementCrudController extends AbstractCrudController
 {
@@ -12,14 +16,15 @@ class PayementCrudController extends AbstractCrudController
         return Payement::class;
     }
 
-    /*
+    
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            IdField::new('id')->onlyOnIndex(),
+            DateField::new('payer_le'),
+            NumberField::new('montant'),
+            AssociationField::new("contrat")
         ];
     }
-    */
+    
 }
